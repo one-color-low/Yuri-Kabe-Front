@@ -20,3 +20,15 @@
 .split-right__inner{
     height: 8000px;
 }
+.yk-bi-icon{
+    font-size: 2rem;
+    color: gray;
+}
+.yk-bi-text{
+    font-size: 1.5rem;
+    color: gray;
+    display: inline-block;
+}
+.yk-thumbnail-img{
+    width: 200;
+}

@@ -3,6 +3,9 @@
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
+        <!-- Bootstrap icons -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+
         <!-- 追加用 CSS -->
         <link rel="stylesheet" type="text/css" href="style.css">
 
@@ -12,15 +15,107 @@
         <!-- Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         
-        <header class="navbar">Header</header>
+        <header class="navbar sticky-top flex-md-nowrap">
+
+            <a class="navbar-brand" href="#">
+                <img src="./img/Yuri-Kabe_logo.png" width="200">
+            </a>
+
+            <input class="form-control" type="text" placeholder="Search">
+            <button href="#">
+                <i class="bi bi-search yk-bi-icon"></i>
+            </button>
+
+            <a class="nav-link" href="#">
+                <i class="bi bi-upload yk-bi-icon"></i>
+            </a>
+
+            <a class="nav-link" href="#">
+                <i class="bi bi-person yk-bi-icon"></i>
+            </a>
+            
+        </header>
+
+        <hr>
 
         <div class="container-fluid">
 
             <div class="row">
-                <nav class="col">Nav</nav>
-                <main class="col">Main</main>
-            </div>
 
+                <!-- サイドバー -->
+                <nav class="col-md-2">
+                    <div class="position-sticky pt-3">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">
+                                    <i class="bi bi-house yk-bi-icon"></i>
+                                    <div class="yk-bi-text">Home</div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">
+                                    <i class="bi bi-balloon yk-bi-icon"></i>
+                                    <div class="yk-bi-text">Hot</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+
+                <!-- ルーム一覧 -->
+                <main class="col-md-9">
+                    <div class="row">
+
+                        <!-- ルーム１-->
+                        <div class="col">
+                            <div class="card">
+                                <img class="yk-thumbnail-img" src="./img/miku.webp">
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        初音ミクの部屋
+                                    </p>
+                                    <div class="d-flex">
+                                        <small class="text-muted">9 mins</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <!-- ルーム２-->
+                        <div class="col">
+                            <div class="card">
+                                <img class="yk-thumbnail-img" src="./img/miku.webp">
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        初音ミクの部屋
+                                    </p>
+                                    <div class="d-flex">
+                                        <small class="text-muted">9 mins</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ルーム３-->
+                        <div class="col">
+                            <div class="card">
+                                <img class="yk-thumbnail-img" src="./img/miku.webp">
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        初音ミクの部屋
+                                    </p>
+                                    <div class="d-flex">
+                                        <small class="text-muted">9 mins</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                    </div>
+                </main>
+            </div>
         
         </div>
         
