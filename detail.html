@@ -1,0 +1,112 @@
+<html>
+    <head>
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+        <!-- Bootstrap icons -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+
+        <!-- 追加用 CSS -->
+        <link rel="stylesheet" type="text/css" href="style.css">
+
+    </head>
+    <body>
+
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        
+        <!-- text-align は子要素全体に反映。子要素で上書き可能。 -->
+        <div class="container-fluid yk-center">
+
+            <div class="yk-text-title yk-left">
+                詳細
+            </div>
+    
+            <div class="container-fluid row yk-box-focus">
+
+                <form id="upload-form" class="col-md-7">
+
+                    <label for="input-title" class="yk-box-caption yk-left">タイトル(必須)</label>
+                    <input id="input-title" class="yk-input-text" type="text">
+
+                    <div class="yk-box-space"></div>
+                    
+                    <label for="input-description" class="yk-box-caption yk-left">説明</label>
+                    <input id="input-description" class="yk-input-text-big" type="text">
+
+                    <div class="yk-box-space"></div>
+                    
+                    <div class="yk-box-caption yk-left">サムネイル</div>
+
+                    <div class="container-fluid row">
+
+                        <div class="col-md-5">
+                            <label for="input-thumbnail" class="btn">
+                                <div class="yk-box-thumbnail">
+                                    <br>
+                                    <div class="bi bi-image yk-bi-icon"></div>
+                                    <p class="center">サムネイルを<br>アップロード</p>
+                                </div>
+                            </label>
+                            <input id="input-thumbnail" type="file">
+                        </div>
+
+                        <div class="col-md-5">
+                            <label for="select-thumbnail" class="btn">
+                                <img class="yk-img-thumbnail" src="./img/miku.webp">
+                            </label>
+                            <input id="select-thumbnail" type="hidden">
+                        </div>
+
+                    </div>
+                
+                </form>
+
+                <div class="col-md-3">
+                    <div class="yk-box-separate">
+                        <p>プレビュー</p>
+                        <!-- todo: canvas設置しプレビュー表示できるように -->
+                    </div>
+                    <div class="yk-box-caption yk-left">ルームリンク</div>
+                    <div class="yk-box-separate-small"></div>
+                    <div class="yk-box-caption yk-left">ファイル名</div>
+                    <div class="yk-box-separate-small">
+                </div>
+    
+            </div>
+
+            <div class="yk-right">
+                <button type="button" class="btn btn-primary yk-bottom yk-center">
+                    作成
+                </button>
+            </div>
+
+        </div>
+
+        <script>
+            const $form = document.getElementById('detail-form');
+
+            // 親要素(form)にイベントをつけると子要素のイベントが拾える
+            $form.addEventListener('change', (e) => {
+                let type = e.target.type;
+                console.log('onChange', type);
+            });
+
+            $form.addEventListener('input', (e) => {
+                let type = e.target.type;
+                console.log('onInput', type);
+
+                // todo: ここにファイル形式バリデーション&アップロード処理追加
+                // だめな場合は「ファイル形式が無効です」とか
+                // OKな場合は detail.html へ
+
+            });
+        </script>
+
+
+        
+    </body>
+</html>
+
+
+
