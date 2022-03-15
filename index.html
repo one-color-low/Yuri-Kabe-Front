@@ -23,16 +23,16 @@
 
             <input class="form-control" type="text" placeholder="Search">
             <button href="#">
+                <i class="bi bi-search yk-bi-icon"></i>
+            </button>
+
+            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#uploadModal">
                 <i class="bi bi-upload yk-bi-icon"></i>
             </button>
 
-            <a class="nav-link" href="#">
-                <i class="bi bi-upload yk-bi-icon"></i>
-            </a>
-
-            <a class="nav-link" href="#">
+            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#loginModal">
                 <i class="bi bi-person yk-bi-icon"></i>
-            </a>
+            </button>
             
         </header>
 
@@ -117,6 +117,73 @@
                 </main>
             </div>
         
+        </div>
+        
+        <!-- Upload Modal -->
+        <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="uploadModalLabel">アップロード</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    
+                    <div class="modal-body">
+                        <iframe src="upload.html"></iframe>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <!-- data-bs-target/toggle/dismiss を入れることでモーダルが切り替わる(同時に開かない) -->
+                        <button type="button" class="btn btn-primary" data-bs-target="#detailModal" data-bs-toggle="modal" data-bs-dismiss="modal">
+                            次へ
+                        </button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- Detail Modal (Upload Modalからのみ移動可能)-->
+        <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="detailModalLabel">詳細</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    
+                    <div class="modal-body">
+                        <iframe src="detail.html"></iframe>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-target="#uploadModal" data-bs-toggle="modal" data-bs-dismiss="modal">
+                            保存
+                        </button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- Login Modal -->
+        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    
+                    <div class="modal-body">
+                        <iframe src="login.html"></iframe>
+                    </div>
+                    
+                </div>
+            </div>
         </div>
         
     </body>
