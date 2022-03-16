@@ -12,6 +12,9 @@
 .yk-center {
     text-align: center;
 }
+.yk-block-center {
+    margin:0 auto;
+}
 .yk-left {
     text-align: left;
 }
@@ -90,4 +93,11 @@
 }
 input[type="file"] {
     display: none;
+}
+.yk-iframe{
+    width: 100%;
+    height: 500;
+}
+.yk-debug{
+    background-color: khaki;
 }
