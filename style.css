@@ -99,7 +99,13 @@ input[type="file"] {
 }
 .yk-iframe{
     width: 100%;
-    height: 500;
+    height: 500px;
+}
+.yk-width-max{
+    width: 100%;
+}
+.yk-height-up{
+    height: 500px;
 }
 .yk-debug{
     background-color: khaki;

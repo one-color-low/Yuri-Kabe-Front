@@ -17,98 +17,11 @@
         
         <!-- three.js -->
         <script src="../static/js/from_example/js/libs/ammo.js"></script>
-
-        <header class="navbar sticky-top flex-md-nowrap">
-
-            <a class="navbar-brand" href="/">
-                <img src="./img/Yuri-Kabe_logo.png" width="200">
-            </a>
-
-            <input class="form-control" type="text" placeholder="Search">
-            <button href="#">
-                <i class="bi bi-search yk-bi-icon"></i>
-            </button>
-
-            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#uploadModal">
-                <i class="bi bi-upload yk-bi-icon"></i>
-            </button>
-
-            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#loginModal">
-                <i class="bi bi-person yk-bi-icon"></i>
-            </button>
             
-        </header>
-
-        <hr>
-
-        <div class="container-fluid row yk-height-up">
-
-            <div class="col-md-9 yk-center">
-                <iframe src="room.html" class="yk-iframe" allow="fullscreen; xr-spatial-tracking;"></iframe>
-
-                <p class="yk-left">タイトル: xxxxxxx</p>
-                <p class="yk-left">説明文: yyyyyy</p>
-                <p class="yk-right">再生回数: zzzz回</p>
-                <p class="yk-left">コメント</p>
-            </div>
-
-            <div class="col-md-3 yk-left">
-
-                <div class="row">
-
-                    <!-- ルーム１-->
-                    <div class="col">
-                        <div class="card">
-                            <img class="yk-thumbnail-img" src="./img/miku.webp">
-                            <div class="card-body">
-                                <p class="card-text">
-                                    初音ミクの部屋
-                                </p>
-                                <div class="d-flex">
-                                    <small class="text-muted">9 mins</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <!-- ルーム２-->
-                    <div class="col">
-                        <div class="card">
-                            <img class="yk-thumbnail-img" src="./img/miku.webp">
-                            <div class="card-body">
-                                <p class="card-text">
-                                    初音ミクの部屋
-                                </p>
-                                <div class="d-flex">
-                                    <small class="text-muted">9 mins</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ルーム３-->
-                    <div class="col">
-                        <div class="card">
-                            <img class="yk-thumbnail-img" src="./img/miku.webp">
-                            <div class="card-body">
-                                <p class="card-text">
-                                    初音ミクの部屋
-                                </p>
-                                <div class="d-flex">
-                                    <small class="text-muted">9 mins</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
+        <div id="room-area" class="col-md-8"></div>
 
 
-        <!-- <script type="module">
+        <script type="module">
 
             import * as THREE from '../static/js/build/three.module.js';
 
@@ -380,7 +293,7 @@
 
             }
 
-        </script> -->
+        </script>
 
     </body>
 
