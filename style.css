@@ -13,7 +13,10 @@
     text-align: center;
 }
 .yk-block-center {
-    margin:0 auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 10em
 }
 .yk-left {
     text-align: left;
