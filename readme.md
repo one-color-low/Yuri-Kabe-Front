@@ -1,11 +1,10 @@
 # Description
 Yuri-Kabeのフロントエンド
 
-# 要件
-- 3Dルームの表示
-- 認証系APIを叩く機能
-- ルーム一覧の表示＆検索機能
-- コメント機能
-- モーションキャプチャ画面
+# Test
 
-## 3Dルームの表示
+## コンテナ単体
+1. `docker build -t yk-web . `
+2. `docker run -d -p 80:8080 yk-web`
+3. localhost へアクセス
+
