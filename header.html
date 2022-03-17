@@ -1,0 +1,108 @@
+<html>
+    <head>
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+        <!-- Bootstrap icons -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+
+        <!-- 追加用 CSS -->
+        <link rel="stylesheet" type="text/css" href="style.css">
+        
+    </head>
+    <body>
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+        <header class="navbar sticky-top flex-md-nowrap">
+
+            <a class="navbar-brand" href="/">
+                <img src="./img/Yuri-Kabe_logo.png" width="200">
+            </a>
+
+            <input class="form-control" type="text" placeholder="Search">
+            <button href="#">
+                <i class="bi bi-search yk-bi-icon"></i>
+            </button>
+
+            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                <i class="bi bi-upload yk-bi-icon"></i>
+            </button>
+
+            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#loginModal">
+                <i class="bi bi-person yk-bi-icon"></i>
+            </button>
+            
+        </header>
+
+        <hr>
+
+        <!-- Upload Modal -->
+        <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="uploadModalLabel">アップロード</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    
+                    <div class="modal-body yk-center">
+                        <iframe src="upload.html" class="yk-iframe"></iframe>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <!-- data-bs-target/toggle/dismiss を入れることでモーダルが切り替わる(同時に開かない) -->
+                        <button type="button" class="btn btn-primary" data-bs-target="#detailModal" data-bs-toggle="modal" data-bs-dismiss="modal">
+                            次へ
+                        </button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- Detail Modal (Upload Modalからのみ移動可能)-->
+        <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="detailModalLabel">詳細</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    
+                    <div class="modal-body yk-center">
+                        <iframe src="detail.html" class="yk-iframe"></iframe>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-target="#uploadModal" data-bs-toggle="modal" data-bs-dismiss="modal">
+                            保存
+                        </button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- Login Modal -->
+        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="loginModalLabel">ログイン/新規登録</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    
+                    <div class="modal-body yk-center">
+                        <iframe src="login.html"></iframe>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+    </body>
+</html>
