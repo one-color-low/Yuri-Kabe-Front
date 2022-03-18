@@ -21,7 +21,7 @@
             </a>
 
             <input class="form-control" type="text" placeholder="Search">
-            <button href="#">
+            <button id="search_button" href="#">
                 <i class="bi bi-search yk-bi-icon"></i>
             </button>
 
@@ -103,6 +103,36 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            function searchRoom(word){
+
+            }
+
+            search_btn = getElementById(search_button);
+            search_btn.onclick = function(){
+
+                //var formData = new FormData(document.getElementById("upload_form"))
+
+                var xhr = new XMLHttpRequest()
+
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        var status = xhr.status;
+                        if (status === 0 || (status >= 200 && status < 400)) {
+                            var res = JSON.parse(xhr.response)
+                            console.log(res)
+                        } else {
+                            console.log("Error. Status: " + status)
+                        }
+                    }
+                }
+
+                xhr.open('GET', 'http://localhost:8000/api/rooms') 
+                xhr.send()
+
+            }
+        </script>
         
     </body>
 </html>
