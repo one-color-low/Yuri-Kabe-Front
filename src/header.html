@@ -21,7 +21,7 @@
             </a>
 
             <input class="form-control" type="text" placeholder="Search">
-            <button id="search_button" href="#">
+            <button id="search_button">
                 <i class="bi bi-search yk-bi-icon"></i>
             </button>
 
@@ -105,11 +105,9 @@
         </div>
 
         <script>
-            function searchRoom(word){
 
-            }
-
-            search_btn = getElementById(search_button);
+            search_btn = document.getElementById('search_button');
+            
             search_btn.onclick = function(){
 
                 //var formData = new FormData(document.getElementById("upload_form"))
