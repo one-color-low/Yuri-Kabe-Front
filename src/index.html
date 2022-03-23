@@ -39,17 +39,63 @@
         </div>
 
         <script>
-            $(function () {
-                $("#header").load("header.html");
-            });
+            function search(){
+                var xhr = new XMLHttpRequest()
+
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        var status = xhr.status;
+                        if (status === 0 || (status >= 200 && status < 400)) {
+                            var res_list = JSON.parse(xhr.response)
+
+                            card_list.innerHTML = ``
+
+                            for(const res of res_list){
+
+                                card_list.innerHTML += `<div class="col">
+                                                        <div class="card">
+                                                            <img class="yk-thumbnail-img" src="./img/miku.webp">
+                                                            <div class="card-body">
+                                                                <p class="card-text">`
+                                                                    +res.title+
+                                                                `</p>
+                                                                <div class="d-flex">
+                                                                    <small class="text-muted">9 mins</small>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>`
+
+                            }
+
+
+
+                        } else {
+                            console.log("Error. Status: " + status)
+                        }
+                    }
+                }
+
+                xhr.open('GET', '/api/rooms') 
+                xhr.send()
+            }
 
             $(function () {
-                $("#list").load("list.html");
+                $("#header").load("header.html", function(){
+                    $("#list").load("list.html", function(){
+                        $("#side-bar").load("side-bar.html", function(){
+
+                            search_btn = document.getElementById('search_button');
+
+                            card_list = document.getElementById('card-list');
+
+                            search_btn.onclick = search;
+
+                        });
+                    });
+                });
             });
 
-            $(function () {
-                $("#side-bar").load("side-bar.html");
-            });
         </script>
         
     </body>
