@@ -110,3 +110,7 @@ input[type="file"] {
 .yk-debug{
     background-color: khaki;
 }
+a{
+    text-decoration: none;
+    color: #000000;
+}

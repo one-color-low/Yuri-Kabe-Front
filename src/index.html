@@ -32,13 +32,33 @@
                 <nav id="side-bar" class="col-md-2"></nav>
 
                 <!-- ルーム一覧 -->
-                <div id="list" class="col-md-10"></div>
+                <div id="card-list" class="col-md-10 row"></div>
 
             </div>
         
         </div>
 
         <script>
+
+            function makeCard(title, url, thumbnail, time){
+
+                const card =    `<div class="col">
+                                    <a class="card" href="` + url + `">
+                                        <img class="yk-thumbnail-img" src="` + thumbnail + `">
+                                        <div class="card-body">
+                                            <p class="card-text">`
+                                                + title +
+                                            `</p>
+                                            <div class="d-flex">
+                                                <small class="text-muted">` + time + `</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>`
+
+                return card
+            }
+
             function search(){
                 var xhr = new XMLHttpRequest()
 
@@ -52,22 +72,11 @@
 
                             for(const res of res_list){
 
-                                card_list.innerHTML += `<div class="col">
-                                                        <div class="card">
-                                                            <img class="yk-thumbnail-img" src="./img/miku.webp">
-                                                            <div class="card-body">
-                                                                <p class="card-text">`
-                                                                    +res.title+
-                                                                `</p>
-                                                                <div class="d-flex">
-                                                                    <small class="text-muted">9 mins</small>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>`
+                                const room_url = "./viewer.html?room_id="+res.id
+
+                                card_list.innerHTML += makeCard(res.title, room_url, "./img/miku.webp", "15min")
 
                             }
-
 
 
                         } else {
@@ -82,16 +91,16 @@
 
             $(function () {
                 $("#header").load("header.html", function(){
-                    $("#list").load("list.html", function(){
-                        $("#side-bar").load("side-bar.html", function(){
+                    $("#side-bar").load("side-bar.html", function(){
 
-                            search_btn = document.getElementById('search_button');
+                        search_btn = document.getElementById('search_button');
 
-                            card_list = document.getElementById('card-list');
+                        card_list = document.getElementById('card-list');
 
-                            search_btn.onclick = search;
+                        search(); //初回実行
 
-                        });
+                        search_btn.onclick = search(); //検索時実行
+
                     });
                 });
             });
