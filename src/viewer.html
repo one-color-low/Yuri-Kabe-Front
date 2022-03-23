@@ -23,12 +23,6 @@
 
         <header id="header"></header>
 
-        <script>
-            $(function () {
-                $("#header").load("header.html");
-            });
-        </script>
-
         <div class="container-fluid row yk-height-up">
 
             <div class="col-md-9 yk-center">
@@ -40,60 +34,27 @@
                 <p class="yk-left">コメント</p>
             </div>
 
-            <div class="col-md-3 yk-left">
-
-                <div class="row">
-
-                    <!-- ルーム１-->
-                    <div class="col">
-                        <div class="card">
-                            <img class="yk-thumbnail-img" src="./img/miku.webp">
-                            <div class="card-body">
-                                <p class="card-text">
-                                    初音ミクの部屋
-                                </p>
-                                <div class="d-flex">
-                                    <small class="text-muted">9 mins</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <!-- ルーム２-->
-                    <div class="col">
-                        <div class="card">
-                            <img class="yk-thumbnail-img" src="./img/miku.webp">
-                            <div class="card-body">
-                                <p class="card-text">
-                                    初音ミクの部屋
-                                </p>
-                                <div class="d-flex">
-                                    <small class="text-muted">9 mins</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ルーム３-->
-                    <div class="col">
-                        <div class="card">
-                            <img class="yk-thumbnail-img" src="./img/miku.webp">
-                            <div class="card-body">
-                                <p class="card-text">
-                                    初音ミクの部屋
-                                </p>
-                                <div class="d-flex">
-                                    <small class="text-muted">9 mins</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
+            <div id="card-list" class="col-md-3 row"></div>
 
         </div>
+
+        <script src='./tools.js'></script>
+
+        <script>
+            $(function () {
+                $("#header").load("header.html", function(){
+
+                    search_btn = document.getElementById('search-button');
+
+                    card_list = document.getElementById('card-list');
+
+                    search(); //初回実行
+
+                    search_btn.onclick = search(); //検索時実行
+
+                });     
+            });
+        </script>
 
     </body>
 
