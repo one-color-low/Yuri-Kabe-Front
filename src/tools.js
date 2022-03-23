@@ -17,7 +17,7 @@ function makeCard(title, url, thumbnail, time){
     return card
 }
 
-function search(){
+function search(search_word){
     var xhr = new XMLHttpRequest()
 
     xhr.onreadystatechange = function() {
@@ -43,6 +43,6 @@ function search(){
         }
     }
 
-    xhr.open('GET', '/api/rooms') 
+    xhr.open('GET', '/api/rooms?search_word='+search_word) 
     xhr.send()
 }
