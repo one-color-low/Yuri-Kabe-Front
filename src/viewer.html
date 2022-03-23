@@ -48,9 +48,12 @@
 
                     card_list = document.getElementById('card-list');
 
-                    search(); //初回実行
+                    search(""); //初回実行
 
-                    search_btn.onclick = search(); //検索時実行
+                    search_btn.onclick = function(){ //検索実行時
+                        search_form = document.getElementById('search-form');
+                        search(search_form.value);
+                    }
 
                 });     
             });
