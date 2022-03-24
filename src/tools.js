@@ -28,12 +28,16 @@ function search(search_word){
 
                 card_list.innerHTML = ``
 
+                var i = 0
+
                 for(const res of res_list){
 
-                    const room_url = "./viewer.html?room_id="+res.id
+                    if(i < 10){ //max20個まで表示
+                        const room_url = "./viewer.html?room_id="+res.id
+                        card_list.innerHTML += makeCard(res.title, room_url, "./img/miku.webp", "15min")
+                    }
 
-                    card_list.innerHTML += makeCard(res.title, room_url, "./img/miku.webp", "15min")
-
+                    i += 1
                 }
 
 
