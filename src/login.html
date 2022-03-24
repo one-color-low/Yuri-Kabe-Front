@@ -11,8 +11,12 @@
 
 
         <!-- Google Sign In -->
-        <script src="https://apis.google.com/js/platform.js" async defer></script>
-        <meta name="google-signin-client_id" content="248112257157-bqfdj7g676v0b9j5m747cveuchoj4p5v.apps.googleusercontent.com">
+        <!-- <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <meta name="google-signin-client_id" content="248112257157-bqfdj7g676v0b9j5m747cveuchoj4p5v.apps.googleusercontent.com"> -->
+
+        <!-- Sign In With Google -->
+        <script src="https://accounts.google.com/gsi/client" async defer></script>
+
 
         <script>
             function onSignIn(googleUser) {
@@ -29,7 +33,20 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         
         <br>
-        <div class="g-signin2 yk-block-center" data-onsuccess="onSignIn"></div>
+
+        <div id="g_id_onload"
+            data-client_id="248112257157-bqfdj7g676v0b9j5m747cveuchoj4p5v.apps.googleusercontent.com"
+            data-login_uri="/api/signIn"
+            data-auto_prompt="false">
+        </div>
+        <div class="g_id_signin"
+            data-type="standard"
+            data-size="large"
+            data-theme="outline"
+            data-text="sign_in_with"
+            data-shape="rectangular"
+            data-logo_alignment="left">
+        </div>
 
     </body>
 </html>
