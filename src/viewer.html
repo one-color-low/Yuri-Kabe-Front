@@ -52,13 +52,13 @@
                     url_obj = new URL(decodeURIComponent(document.location.href))
                     room_id = url_obj.searchParams.get("room_id")
 
-                    makeRoomInfo(room_id); //なぜかこいつが何回も呼ばれる。(しかもその度にroom_idが変わる)
+                    makeRoomInfo(room_id); 
 
                     search(""); //初回実行
 
-                    search_btn.onclick = function(){ //検索実行時
+                    search_btn.onclick = function(){ 
                         search_form = document.getElementById('search-form');
-                        search(search_form.value);
+                        search(search_form.value); //検索実行時
                     }
 
                 });     
