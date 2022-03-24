@@ -46,3 +46,32 @@ function search(search_word){
     xhr.open('GET', '/api/rooms?search_word='+search_word) 
     xhr.send()
 }
+
+function makeRoomInfoList(title, description, times, comment){
+    const infoList =    `<p class="yk-left">タイトル: ` + title + `</p>
+                    <p class="yk-left">説明文: ` + description + `</p>
+                    <p class="yk-right">再生回数: ` + times + `回</p>
+                    <p class="yk-left">コメント: ` + comment + `</p>`
+
+    return infoList
+}
+
+function makeRoomInfo(room_id){
+
+    var xhr = new XMLHttpRequest()
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            var status = xhr.status;
+            if (status === 0 || (status >= 200 && status < 400)) {
+                var res = JSON.parse(xhr.response)
+                room_info.innerHTML = makeRoomInfoList(res.title, res.description, "111", "none")
+            } else {
+                console.log("Error. Status: " + status)
+            }
+        }
+    }
+
+    xhr.open('GET', '/api/rooms/'+room_id) 
+    xhr.send()
+}

@@ -25,13 +25,12 @@
 
         <div class="container-fluid row yk-height-up">
 
-            <div class="col-md-9 yk-center">
+            <div class="col-md-9 yk-center" id="room-viewer">
+
                 <iframe src="room.html" class="yk-iframe" allow="fullscreen; xr-spatial-tracking;"></iframe>
 
-                <p class="yk-left">タイトル: xxxxxxx</p>
-                <p class="yk-left">説明文: yyyyyy</p>
-                <p class="yk-right">再生回数: zzzz回</p>
-                <p class="yk-left">コメント</p>
+                <div id="room-info"></div>
+
             </div>
 
             <div class="col-md-3 row" id="card-list"></div>
@@ -47,6 +46,13 @@
                     search_btn = document.getElementById('search-button');
 
                     card_list = document.getElementById('card-list');
+
+                    room_info = document.getElementById('room-info');
+
+                    url_obj = new URL(decodeURIComponent(document.location.href))
+                    room_id = url_obj.searchParams.get("room_id")
+
+                    makeRoomInfo(room_id); //なぜかこいつが何回も呼ばれる。(しかもその度にroom_idが変わる)
 
                     search(""); //初回実行
 
