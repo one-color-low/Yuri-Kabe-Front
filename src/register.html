@@ -1,0 +1,98 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+        <!-- Bootstrap icons -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+
+        <!-- 追加用 CSS -->
+        <link rel="stylesheet" type="text/css" href="style.css">
+
+    </head>
+    <body>
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+        <!-- Sign In With Google -->
+        <!-- <script src="https://accounts.google.com/gsi/client" async defer></script> -->
+
+        <!-- <div class="g_id_signin" data></div> -->
+
+        <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+
+            <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+
+            <form class="mx-1 mx-md-4" id="register-form">
+                
+                <!-- id_tokenダミ -->
+                <input type="hidden" name="credential" id="credential" value="dummy-before">
+                
+                <!-- ユーザー名入力 -->
+                <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                    <input type="text" id="user-name" name="user-name" class="form-control" />
+                    <label class="form-label" for="user-name">Your Name</label>
+                    </div>
+                </div>
+
+                <!-- 利用規約同意チェック -->
+                <div class="form-check d-flex justify-content-center mb-5">
+                    <input
+                    class="form-check-input me-2"
+                    type="checkbox"
+                    value=""
+                    id="form2Example3c"
+                    />
+                    <label class="form-check-label" for="form2Example3">
+                    I agree all statements in <a href="#!">Terms of service</a>
+                    </label>
+                </div>
+
+                <!-- 登録ボタン -->
+                <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                    <button type="button" class="btn btn-primary btn-lg" id="register-btn">Register</button>
+                </div>
+
+            </form>
+
+            <form action="/api/register" method="POST">
+                <input type="hidden" name="credential" id="credential" value="dummy-before">
+                <input type="submit" value="送信">
+            </form>
+
+        </div>
+
+        <script>
+            var register_btn = document.getElementById("register-btn")
+            register_btn.onclick = function(){
+
+                var tokenElement = document.getElementById("credential");
+                tokenElement.value = "dummy-after";
+
+                var register_form = document.getElementById("register-form")
+                
+                var xhr = new XMLHttpRequest()
+                var formData = new FormData(register_form)
+
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        var status = xhr.status;
+                        if (status === 0 || (status >= 200 && status < 400)) {
+                            console.log("OK. Status: " + status)
+                        }else{
+                            console.log("Error. Status: " + status)
+                        }
+                    }
+                }
+                
+                xhr.open('POST', '/api/register')
+                xhr.send(formData)
+            }
+        </script>
+
+    </body>
+</html>
