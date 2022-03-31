@@ -11,15 +11,27 @@
         <!-- 追加用 CSS -->
         <link rel="stylesheet" type="text/css" href="style.css">
 
+        <!-- Sign In With Google -->
+        <script src="https://accounts.google.com/gsi/client" async defer></script>
+        <script>
+            function onSignIn(credentialResponse) {
+                console.log("token is: "+credentialResponse.credential)
+                var credential = document.getElementById("credential")
+                credential.value = credentialResponse.credential
+            }
+        </script>
     </head>
     <body>
+        <div
+        id="g_id_onload"
+        data-client_id="248112257157-bqfdj7g676v0b9j5m747cveuchoj4p5v.apps.googleusercontent.com"
+        data-context="signin"
+        data-callback="onSignIn"
+        data-auto_select="true"
+        ></div>
+
         <!-- Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
-        <!-- Sign In With Google -->
-        <!-- <script src="https://accounts.google.com/gsi/client" async defer></script> -->
-
-        <!-- <div class="g_id_signin" data></div> -->
 
         <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
@@ -67,11 +79,12 @@
         </div>
 
         <script>
+            
             var register_btn = document.getElementById("register-btn")
             register_btn.onclick = function(){
 
                 var tokenElement = document.getElementById("credential");
-                tokenElement.value = "dummy-after";
+                //tokenElement.value = "dummy-after";
 
                 var register_form = document.getElementById("register-form")
                 
