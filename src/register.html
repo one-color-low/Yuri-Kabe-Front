@@ -15,7 +15,6 @@
         <script src="https://accounts.google.com/gsi/client" async defer></script>
         <script>
             function onSignIn(credentialResponse) {
-                console.log("token is: "+credentialResponse.credential)
                 var credential = document.getElementById("credential")
                 credential.value = credentialResponse.credential
             }
@@ -23,11 +22,11 @@
     </head>
     <body>
         <div
-        id="g_id_onload"
-        data-client_id="248112257157-bqfdj7g676v0b9j5m747cveuchoj4p5v.apps.googleusercontent.com"
-        data-context="signin"
-        data-callback="onSignIn"
-        data-auto_select="true"
+            id="g_id_onload"
+            data-client_id="248112257157-bqfdj7g676v0b9j5m747cveuchoj4p5v.apps.googleusercontent.com"
+            data-context="signin"
+            data-callback="onSignIn"
+            data-auto_select="true"
         ></div>
 
         <!-- Bootstrap JS -->
@@ -39,7 +38,7 @@
 
             <form class="mx-1 mx-md-4" id="register-form">
                 
-                <!-- id_tokenダミ -->
+                <!-- id_token -->
                 <input type="hidden" name="credential" id="credential" value="dummy-before">
                 
                 <!-- ユーザー名入力 -->
@@ -84,7 +83,6 @@
             register_btn.onclick = function(){
 
                 var tokenElement = document.getElementById("credential");
-                //tokenElement.value = "dummy-after";
 
                 var register_form = document.getElementById("register-form")
                 
