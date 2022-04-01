@@ -27,7 +27,7 @@
 
             <div class="col-md-9 yk-center" id="room-viewer">
 
-                <iframe src="room.html" class="yk-iframe" allow="fullscreen; xr-spatial-tracking;"></iframe>
+                <iframe id="room-iframe" src="room.html" class="yk-iframe" allow="fullscreen; xr-spatial-tracking;"></iframe>
 
                 <div id="room-info"></div>
 
@@ -36,6 +36,14 @@
             <div class="col-md-3 row" id="card-list"></div>
 
         </div>
+
+        <script>
+            var room_iframe = document.getElementById("room-iframe")
+            url_obj = new URL(decodeURIComponent(document.location.href))
+            room_id = url_obj.searchParams.get("room_id")
+            console.log('/api/static/room/'+room_id)
+            room_iframe.contentDocument.location.replace('/api/static/room/'+room_id)
+        </script>
 
         <script src='./tools.js'></script>
 
