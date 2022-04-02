@@ -33,7 +33,7 @@
                 </p>
                 
                 <label class="btn btn-primary">
-                    <input type="file" id="file-input">
+                    <input type="file" id="file-input" name="file-input">
                     ファイルを選択
                 </label>
     
@@ -57,6 +57,23 @@
                 // todo: ここにファイル形式バリデーション&アップロード処理追加
                 // だめな場合は「ファイル形式が無効です」とか
                 // OKな場合は detail.html へ
+
+                var xhr = new XMLHttpRequest()
+                var formData = new FormData($form)
+
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        var status = xhr.status;
+                        if (status === 0 || (status >= 200 && status < 400)) {
+                            console.log("OK. Status: " + status)
+                        }else{
+                            console.log("Error. Status: " + status)
+                        }
+                    }
+                }
+                
+                xhr.open('POST', '/api/upload')
+                xhr.send(formData)
 
             });
         </script>
