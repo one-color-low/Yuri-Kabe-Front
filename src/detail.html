@@ -9,6 +9,12 @@
         <!-- 追加用 CSS -->
         <link rel="stylesheet" type="text/css" href="style.css">
 
+        <script>
+            url_obj = new URL(decodeURIComponent(document.location.href))
+            room_id = url_obj.searchParams.get("room_id")
+            console.log(room_id)
+        </script>
+
     </head>
     <body>
 

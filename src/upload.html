@@ -66,6 +66,7 @@
                         var status = xhr.status;
                         if (status === 0 || (status >= 200 && status < 400)) {
                             console.log("OK. Status: " + status)
+                            window.location=xhr.responseURL //リダイレクトに必要
                         }else{
                             console.log("Error. Status: " + status)
                         }
