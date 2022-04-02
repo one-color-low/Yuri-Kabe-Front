@@ -27,12 +27,12 @@
             <form id="detail-form" class="col-md-8">
 
                 <label for="input-title" class="yk-box-caption yk-left">タイトル(必須)</label>
-                <input id="input-title" class="yk-input-text" type="text">
+                <input id="input-title" name="input-title" class="yk-input-text" type="text">
 
                 <div class="yk-box-space"></div>
                 
                 <label for="input-description" class="yk-box-caption yk-left">説明</label>
-                <input id="input-description" class="yk-input-text-big" type="text">
+                <input id="input-description" name="input-description" class="yk-input-text-big" type="text">
 
                 <div class="yk-box-space"></div>
                 
@@ -59,8 +59,8 @@
                     </div>
 
                 </div>
-            
             </form>
+
             <div class="col-md-4">
                 <div class="yk-box-separate">
                     <p>プレビュー</p>
@@ -73,24 +73,34 @@
             </div>
         </div>
 
+        <button class="btn btn-primary" id="room-create">ルーム作成</button>
+
         <script>
-            const $form = document.getElementById('detail-form');
+            var create_btn = document.getElementById("room-create")
+            var detail_form = document.getElementById("detail-form")
 
-            // 親要素(form)にイベントをつけると子要素のイベントが拾える
-            $form.addEventListener('change', (e) => {
-                let type = e.target.type;
-                console.log('onChange', type);
-            });
+            create_btn.onclick = function(){
+                var formData = new FormData(detail_form)
+                formData.append("room-id", room_id)
 
-            $form.addEventListener('input', (e) => {
-                let type = e.target.type;
-                console.log('onInput', type);
+                var xhr = new XMLHttpRequest()
 
-                // todo: ここにファイル形式バリデーション&アップロード処理追加
-                // だめな場合は「ファイル形式が無効です」とか
-                // OKな場合は detail.html へ
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        var status = xhr.status;
+                        if (status === 0 || (status >= 200 && status < 400)) {
+                            console.log("OK. Status: " + status)
+                            window.location=xhr.responseURL //リダイレクトに必要
+                        }else{
+                            console.log("Error. Status: " + status)
+                        }
+                    }
+                }
+                
+                xhr.open('POST', '/api/rooms')
+                xhr.send(formData)
+            }
 
-            });
         </script>
 
 
