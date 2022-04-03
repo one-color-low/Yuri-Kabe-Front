@@ -51,9 +51,29 @@ function search(search_word){
     xhr.send()
 }
 
-function makeRoomInfoList(title, description, times, comment){
+function getUserName(user_id){
+
+    var xhr = new XMLHttpRequest()
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            var status = xhr.status;
+            if (status === 0 || (status >= 200 && status < 400)) {
+                var res = JSON.parse(xhr.response)
+                return res.name
+            } else {
+                console.log("Error. Status: " + status)
+            }
+        }
+    }
+
+    xhr.open('GET', '/api/users/'+user_id) 
+    xhr.send()
+}
+
+function makeRoomInfoList(title, description, author, times, comment){
     const infoList =    `<p class="yk-left">タイトル: ` + title + `</p>
                     <p class="yk-left">説明文: ` + description + `</p>
+                    <p class="yk-left">製作者: ` + author + `</p>
                     <p class="yk-right">再生回数: ` + times + `回</p>
                     <p class="yk-left">コメント: ` + comment + `</p>`
 
@@ -69,7 +89,8 @@ function makeRoomInfo(room_id){
             var status = xhr.status;
             if (status === 0 || (status >= 200 && status < 400)) {
                 var res = JSON.parse(xhr.response)
-                room_info.innerHTML = makeRoomInfoList(res.title, res.description, "111", "none")
+                var user_name = getUserName(res.author)
+                room_info.innerHTML = makeRoomInfoList(res.title, res.description, res.author, "111", "none")
             } else {
                 console.log("Error. Status: " + status)
             }
