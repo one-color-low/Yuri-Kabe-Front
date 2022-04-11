@@ -5,7 +5,7 @@ RUN apt-get install -y vim locales
 RUN apt-get install -y iputils-ping net-tools
 
 # nginx.conf で include /etc/nginx/conf.d/*.conf; するので、好きな名前で設定ファイルを置けばOK。
-COPY ./conf /etc/nginx/conf.d/web.conf 
+COPY ./conf /etc/nginx/conf.d/
 
 # トップページの設定
 COPY ./src /var/www
