@@ -1,4 +1,4 @@
-function makeCard(title, url, thumbnail, time){
+function makeCard(title, url, thumbnail, views){
 
     const card =    `<div class="col">
                         <a class="card" href="` + url + `">
@@ -8,7 +8,7 @@ function makeCard(title, url, thumbnail, time){
                                     + title +
                                 `</p>
                                 <div class="d-flex">
-                                    <small class="text-muted">` + time + `</small>
+                                    <small class="text-muted">再生回数: ` + views + `回</small>
                                 </div>
                             </div>
                         </a>
@@ -35,7 +35,7 @@ function search(search_word){
                     if(i < 10){ //max20個まで表示
                         const room_url = "./viewer.html?room_id="+res.id
                         const thumbnail_url = '/api/static/room/'+res.id+'/thumbnail.jpg'
-                        card_list.innerHTML += makeCard(res.title, room_url, thumbnail_url, "15min")
+                        card_list.innerHTML += makeCard(res.title, room_url, thumbnail_url, res.views)
                     }
 
                     i += 1
@@ -91,7 +91,7 @@ function makeRoomInfo(room_id){
             if (status === 0 || (status >= 200 && status < 400)) {
                 var res = JSON.parse(xhr.response)
                 var user_name = getUserName(res.author)
-                room_info.innerHTML = makeRoomInfoList(res.title, res.description, res.author, "111", "none")
+                room_info.innerHTML = makeRoomInfoList(res.title, res.description, res.author, res.views, "none")
             } else {
                 console.log("Error. Status: " + status)
             }
