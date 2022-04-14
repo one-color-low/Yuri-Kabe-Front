@@ -34,7 +34,7 @@
 
         <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-            <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+            <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">新規登録</p>
 
             <form class="mx-1 mx-md-4" id="register-form">
                 
@@ -46,12 +46,12 @@
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
                     <input type="text" id="user-name" name="user-name" class="form-control" />
-                    <label class="form-label" for="user-name">Your Name</label>
+                    <label class="form-label" for="user-name">ユーザー名</label>
                     </div>
                 </div>
 
                 <!-- 利用規約同意チェック -->
-                <div class="form-check d-flex justify-content-center mb-5">
+                <!-- <div class="form-check d-flex justify-content-center mb-5">
                     <input
                     class="form-check-input me-2"
                     type="checkbox"
@@ -61,25 +61,23 @@
                     <label class="form-check-label" for="form2Example3">
                     I agree all statements in <a href="#!">Terms of service</a>
                     </label>
-                </div>
+                </div> -->
 
                 <!-- 登録ボタン -->
                 <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <button type="button" class="btn btn-primary btn-lg" id="register-btn">Register</button>
+                    <button type="button" class="btn btn-primary btn-lg" id="register-btn">登録</button>
                 </div>
 
             </form>
 
-            <form action="/api/register" method="POST">
-                <input type="hidden" name="credential" id="credential" value="dummy-before">
-                <input type="submit" value="送信">
-            </form>
+            <div id="error-msg"></div>
 
         </div>
 
         <script>
             
             var register_btn = document.getElementById("register-btn")
+            var error_msg = document.getElementById("error-msg")
             register_btn.onclick = function(){
 
                 var tokenElement = document.getElementById("credential");
@@ -97,6 +95,7 @@
                             window.location=xhr.responseURL //リダイレクトに必要
                         }else{
                             console.log("Error. Status: " + status)
+                            error_msg.innerHTML = xhr.response
                         }
                     }
                 }

@@ -55,7 +55,7 @@
 
                 <div class="yk-box-space"></div>
                 
-                <div class="yk-box-caption yk-left">サムネイル</div>
+                <div class="yk-box-caption yk-left">サムネイル(jpeg/png)</div>
 
                 <div class="container-fluid row">
 
@@ -70,33 +70,24 @@
                         <input id="input-thumbnail" name="input-thumbnail" type="file">
                     </div>
 
-                    <div class="col-md-5">
-                        <label for="select-thumbnail" class="btn">
-                            <img class="yk-img-thumbnail" src="./img/miku.webp">
-                        </label>
-                        <input id="select-thumbnail" type="hidden">
-                    </div>
+                    <!-- todo: サムネのプレビューを表示 -->
 
                 </div>
             </form>
 
-            <div class="col-md-4">
-                <div class="yk-box-separate">
-                    <p>プレビュー</p>
-                    <!-- todo: canvas設置しプレビュー表示できるように -->
-                </div>
-                <div class="yk-box-caption yk-left">ルームリンク</div>
-                <div class="yk-box-separate-small"></div>
-                <div class="yk-box-caption yk-left">ファイル名</div>
-                <div class="yk-box-separate-small">
-            </div>
+            <!-- todo: iframeでプレビュー表示 -->
+            <!-- todo: ルームidを表示 -->
+        
         </div>
 
         <button class="btn btn-primary" id="room-create">ルーム作成</button>
 
+        <div id="error-msg"></div>
+
         <script>
             var create_btn = document.getElementById("room-create")
             var detail_form = document.getElementById("detail-form")
+            var error_msg = document.getElementById("error-msg")
 
             create_btn.onclick = function(){
                 var formData = new FormData(detail_form)
@@ -112,6 +103,7 @@
                             window.location=xhr.responseURL //リダイレクトに必要
                         }else{
                             console.log("Error. Status: " + status)
+                            error_msg.innerHTML = xhr.response
                         }
                     }
                 }
