@@ -117,3 +117,11 @@ a{
 .yk-margin{
     margin : 30px ;
 }
+.yk-etc {
+    position: relative;
+  }
+.yk-contact{
+    position: absolute;
+    right: 10;
+    bottom: 10;
+}
