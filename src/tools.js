@@ -52,24 +52,39 @@ function search(search_word){
     xhr.send()
 }
 
-function getUserName(user_id){
+// async function getUserName(user_id){
 
-    var xhr = new XMLHttpRequest()
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            var status = xhr.status;
-            if (status === 0 || (status >= 200 && status < 400)) {
-                var res = JSON.parse(xhr.response)
-                return res.name
-            } else {
-                console.log("Error. Status: " + status)
-            }
-        }
-    }
+//     fetch('/api/users/'+user_id, {
+//         method: "GET",
+//     }).then(
+//         response => response.text()
+//     ).then(
+//         text => {
+//             var res = JSON.parse(text)
+//             console.log("before return " + res.name)
+//             return res.name
+//         }
+//     )
 
-    xhr.open('GET', '/api/users/'+user_id) 
-    xhr.send()
-}
+// }
+
+// var getUserName = new Promise(function(resolve, reject){
+
+//     fetch('/api/users/'+user_id, {
+//         method: "GET",
+//     }).then(
+//         response => response.text()
+//     ).then(
+//         text => {
+//             var res = JSON.parse(text)
+//             console.log("before return " + res.name)
+//             resolve(res.name)
+//         }
+//     )
+
+// })
+
+
 
 function makeRoomInfoList(title, description, author, times, comment){
     const infoList =    `<p class="yk-left">タイトル: ` + title + `</p>
@@ -90,8 +105,18 @@ function makeRoomInfo(room_id){
             var status = xhr.status;
             if (status === 0 || (status >= 200 && status < 400)) {
                 var res = JSON.parse(xhr.response)
-                var user_name = getUserName(res.author)
-                room_info.innerHTML = makeRoomInfoList(res.title, res.description, res.author, res.views, "none")
+                console.log(res.author)
+                var user_id = res.author
+                fetch('/api/users/'+user_id, {
+                    method: "GET",
+                }).then(
+                    response => response.text()
+                ).then(
+                    text => {
+                        var resu = JSON.parse(text)
+                        room_info.innerHTML = makeRoomInfoList(res.title, res.description, resu.name, res.views, "none")
+                    }
+                )
             } else {
                 console.log("Error. Status: " + status)
             }
@@ -100,4 +125,5 @@ function makeRoomInfo(room_id){
 
     xhr.open('GET', '/api/rooms/'+room_id) 
     xhr.send()
+    
 }
