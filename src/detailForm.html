@@ -1,0 +1,120 @@
+<div id="formAreaAreaArea">
+
+    <div class="container-fluid row">     
+        <form id="detail-form" class="col-md-8">
+
+            <label for="input-title" class="yk-box-caption yk-left">タイトル(必須)</label>
+            <input id="input-title" name="title" class="yk-input-text" type="text">
+
+            <div class="yk-box-space"></div>
+            
+            <label for="input-description" class="yk-box-caption yk-left">説明</label>
+            <input id="input-description" name="description" class="yk-input-text-big" type="text">
+
+            <div class="yk-box-space"></div>
+            
+        </form>
+
+        <form id="thumbnail-form" class="col-md-4">
+
+            <div class="yk-box-caption yk-left">サムネイル(jpeg/png)</div>
+
+            <div class="container-fluid row">
+
+                <div class="col-md-5">
+                    <label for="input-thumbnail" class="btn">
+                        <div class="yk-box-thumbnail">
+                            <br>
+                            <div class="bi bi-image yk-bi-icon"></div>
+                            <p class="center">サムネイルを<br>アップロード</p>
+                        </div>
+                    </label>
+                    <input id="input-thumbnail" name="file-input" type="file">
+                </div>
+
+                <!-- todo: サムネのプレビューを表示 -->
+
+            </div>
+
+        </form>
+
+
+        <!-- todo: iframeでプレビュー表示 -->
+        <!-- todo: ルームidを表示 -->
+
+    </div>
+
+    <button class="btn btn-primary" id="room-create">ルーム作成</button>
+
+    <div id="error-msg"></div>
+
+</div>
+
+<script>
+
+    var create_btn = document.getElementById("room-create")
+    var detail_form = document.getElementById("detail-form")
+
+    create_btn.onclick = function(){
+        var formData = new FormData(detail_form)
+        formData.append("id", room_id)
+
+        var formDataObj = Object.fromEntries(formData)
+
+        var xhr = new XMLHttpRequest()
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                var status = xhr.status;
+                if (status === 0 || (status >= 200 && status < 400)) {
+                    console.log("OK. Status: " + status)
+                    $("#formAreaAreaArea").load("success.html", function(){
+                        console.log("room create success")
+                    })
+                }else{
+                    console.log("Error. Status: " + status)
+                }
+            }
+        }
+        
+        xhr.open('PUT', '/api/rooms/'+room_id)
+        xhr.send(JSON.stringify(formDataObj)) //formDataをjsonに変換して送信(room構造体に対応している必要あり)
+    }
+
+    // サムネアップロード対応
+    const thumbnail_form = document.getElementById('thumbnail-form')
+    thumbnail_form.addEventListener('change', (e) => {
+        let type = e.target.type;
+        console.log('onChange', type);
+    });
+
+    thumbnail_form.addEventListener('input', (e) => {
+        let type = e.target.type;
+        console.log('onInput', type)
+
+        var xhr = new XMLHttpRequest()
+        var formData = new FormData(thumbnail_form)
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                var status = xhr.status;
+                if (status === 0 || (status >= 200 && status < 400)) {
+                    console.log("OK. Status: " + status)
+                }else{
+                    console.log("Error. Status: " + status)
+                    error_msg.innerHTML = xhr.response
+                }
+            }
+        }
+        
+        var req_url = '/api/upload?file_type=thumbnail&room_id='+room_id
+        console.log(req_url)
+        xhr.open('POST', req_url)
+        xhr.send(formData)
+
+    });
+
+</script>
+
+
+

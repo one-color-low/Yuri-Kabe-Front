@@ -9,7 +9,7 @@
         <i class="bi bi-search yk-bi-icon"></i>
     </button>
     
-    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#uploadModal">
+    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#uploadModal" id="upload-btn">
         <i class="bi bi-upload yk-bi-icon"></i>
     </button>
     
@@ -30,15 +30,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             
-            <div class="modal-body yk-center">
-                <iframe src="upload.html" class="yk-iframe"></iframe>
-            </div>
+            <div class="modal-body yk-center" id="formArea"></div>
+            <p class="yk-center" id="formAreaPreparingMessage">準備中です。少々お待ち下さい。</p>
             
         </div>
     </div>
 </div>
 
-<!-- Detail Modal (Upload Modalからのみ移動可能)-->
+<!-- Detail Modal (Upload Modalからのみ移動可能) 使ってない! -->
 <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -73,3 +72,59 @@
         </div>
     </div>
 </div>
+
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<script>
+
+    var room_id // jqueryの下の階層からも見える変数
+
+    $(function () {
+        $("#formArea").load("motionUploadForm.html", function(){
+
+            var upload_btn = document.getElementById('upload-btn')
+            var formArea = document.getElementById('formArea')
+            var formAreaPreparingMessage = document.getElementById('formAreaPreparingMessage')
+
+            formArea.hidden = true
+            formAreaPreparingMessage.hidden = false
+
+            upload_btn.onclick =  function() {
+
+                console.log("upload_btn clicked")
+
+                var mockObj = {
+                    "room_id" : "xxx",
+                    "author" : "xxx"
+                }
+
+                var xhr = new XMLHttpRequest()
+
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        var status = xhr.status;
+                        if (status === 0 || (status >= 200 && status < 400)) {
+                            console.log("OK. Status: " + status)
+                            var res = JSON.parse(xhr.response)
+                            console.log(res)
+                            room_id = res.id
+                            console.log("room id is: " + room_id)
+                            formArea.hidden = false // ルーム作成完了したタイミングでアップロードフォーム表示
+                            formAreaPreparingMessage.hidden = true
+                        }else{
+                            console.log("Error. Status: " + status)
+                        }
+                    }
+                }
+                xhr.open('POST', '/api/rooms')
+                xhr.send(JSON.stringify(mockObj)) 
+
+            }
+
+        })
+    })
+
+
+</script>

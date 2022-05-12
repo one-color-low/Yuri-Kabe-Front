@@ -50,6 +50,9 @@
         <script>
 
             var room_id 
+            var upload_form = document.getElementById("upload-form")
+
+            upload_form.hidden = true
 
             // 1. roomの作成
             var mockObj = {
@@ -57,7 +60,7 @@
                     "author" : "xxx"
                 }
 
-            window.onload = function(){
+            upload_btn.onclick = function(){
                 var xhr = new XMLHttpRequest()
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -68,6 +71,7 @@
                             console.log(res)
                             room_id = res.id
                             console.log("room id is: " + room_id)
+                            upload_form.hidden = false // ルーム作成完了したタイミングでアップロードフォーム表示
                         }else{
                             console.log("Error. Status: " + status)
                         }

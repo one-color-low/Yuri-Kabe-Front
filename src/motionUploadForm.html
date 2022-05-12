@@ -1,0 +1,69 @@
+<div class="yk-center" id="formAreaArea">
+
+    <!-- todo: ドラッグ&ドロップできるように -->
+    <form id="upload-form">
+
+        <p class="bi bi-upload yk-bi-icon-big"></p>
+
+        <p class="yk-text-normal"> 
+            <!-- アップロードするルームファイルをドラッグ&ドロップします。 -->
+            アップロードするvmdファイル※を選択してください。
+        </p>
+
+        <p class="yk-text-description">
+            <!-- 公開するまで、ルームは非公開になります。 -->
+            ※vmdファイルについては<a href="https://mmdagent-ex.dev/ja/docs/files/vmd/#:~:text=.vmd%20%E3%81%AF%20MikuMikuDance%20(MMD),%E3%82%82%E5%AF%BE%E5%BF%9C%E3%81%97%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82">こちら</a>をご参照ください。
+        </p>
+        
+        <label class="btn btn-primary">
+            <input type="file" id="file-input" name="file-input">
+            ファイルを選択
+        </label>
+
+    </form>
+
+    <div id="error-msg"></div>
+
+</div>
+
+<script>
+
+    // 2. 作成されたroomにファイルをアップロード
+    const form = document.getElementById('upload-form')
+    const error_msg = document.getElementById('error-msg')
+
+    // 親要素(form)にイベントをつけると子要素のイベントが拾える
+    form.addEventListener('change', (e) => {
+        let type = e.target.type;
+        console.log('onChange', type);
+    });
+
+    form.addEventListener('input', (e) => {
+        let type = e.target.type;
+        console.log('onInput', type);
+
+        var xhr = new XMLHttpRequest()
+        var formData = new FormData(form)
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                var status = xhr.status;
+                if (status === 0 || (status >= 200 && status < 400)) {
+                    console.log("OK. Status: " + status)
+                    $("#formAreaArea").load("detailForm.html", function(){
+                        console.log("prepare detail form complete")
+                    })
+                }else{
+                    console.log("Error. Status: " + status)
+                    error_msg.innerHTML = xhr.response
+                }
+            }
+        }
+        
+        var req_url = '/api/upload?file_type=motion&room_id='+room_id
+        console.log(req_url)
+        xhr.open('POST', req_url)
+        xhr.send(formData)
+
+    });
+</script>
