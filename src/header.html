@@ -26,34 +26,20 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5 class="modal-title" id="uploadModalLabel">アップロード</h5>
+                <h5 class="modal-title" id="uploadModalLabel">ルーム作成</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             
             <div class="modal-body yk-center" id="formArea"></div>
             <p class="yk-center" id="formAreaPreparingMessage">準備中です。少々お待ち下さい。</p>
+            <p class="yk-center" id="formAreaUnloginMessage">
+                ルームをアップロードするには<i class="bi bi-person yk-bi-icon"></i>アイコンからログインしてください。
+            </p>
             
         </div>
     </div>
 </div>
 
-<!-- Detail Modal (Upload Modalからのみ移動可能) 使ってない! -->
-<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <h5 class="modal-title" id="detailModalLabel">詳細</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            
-            <div class="modal-body yk-center">
-                <iframe src="detail.html" class="yk-iframe"></iframe>
-            </div>
-            
-        </div>
-    </div>
-</div>
 
 <!-- Login Modal -->
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
@@ -87,9 +73,11 @@
             var upload_btn = document.getElementById('upload-btn')
             var formArea = document.getElementById('formArea')
             var formAreaPreparingMessage = document.getElementById('formAreaPreparingMessage')
+            var formAreaUnloginMessage = document.getElementById('formAreaUnloginMessage')
 
             formArea.hidden = true
             formAreaPreparingMessage.hidden = false
+            formAreaUnloginMessage.hidden = true
 
             upload_btn.onclick =  function() {
 
@@ -115,6 +103,9 @@
                             formAreaPreparingMessage.hidden = true
                         }else{
                             console.log("Error. Status: " + status)
+                            console.log(xhr.response)
+                            formAreaPreparingMessage.hidden = true
+                            formAreaUnloginMessage.hidden = false
                         }
                     }
                 }
