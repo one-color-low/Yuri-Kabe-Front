@@ -1,0 +1,66 @@
+<div class="yk-center" id="formAreaArea">
+
+    <!-- todo: ドラッグ&ドロップできるように -->
+    <form id="upload-form">
+
+        <p class="bi bi-upload yk-bi-icon-big"></p>
+
+        <p class="yk-text-normal"> 
+            アップロードする3Dモデルのpmd/pmxファイル※を選択してください。
+        </p>
+
+        <p class="yk-text-description">
+            ※pmd/pmxファイルについては<a href="https://mmdagent-ex.dev/ja/docs/files/pmx/">こちら</a>をご参照ください。
+        </p>
+        
+        <label class="btn btn-primary">
+            <input type="file" id="file-input" name="file-input">
+            ファイルを選択
+        </label>
+
+    </form>
+
+    <div id="error-msg"></div>
+
+</div>
+
+<script>
+
+    const form = document.getElementById('upload-form')
+    const error_msg = document.getElementById('error-msg')
+
+    // 親要素(form)にイベントをつけると子要素のイベントが拾える
+    form.addEventListener('change', (e) => {
+        let type = e.target.type;
+        console.log('onChange', type);
+    });
+
+    form.addEventListener('input', (e) => {
+        let type = e.target.type;
+        console.log('onInput', type);
+
+        var xhr = new XMLHttpRequest()
+        var formData = new FormData(form)
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                var status = xhr.status;
+                if (status === 0 || (status >= 200 && status < 400)) {
+                    console.log("OK. Status: " + status)
+                    $("#formAreaArea").load("detailForm.html", function(){
+                        console.log("prepare detail form complete")
+                    })
+                }else{
+                    console.log("Error. Status: " + status)
+                    error_msg.innerHTML = xhr.response
+                }
+            }
+        }
+        
+        var req_url = '/api/upload?file_type=model&room_id='+room_id
+        console.log(req_url)
+        xhr.open('POST', req_url)
+        xhr.send(formData)
+
+    });
+</script>
