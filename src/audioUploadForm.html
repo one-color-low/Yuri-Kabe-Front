@@ -1,18 +1,16 @@
 <div class="yk-center">
 
     <!-- todo: ドラッグ&ドロップできるように -->
-    <form id="model-upload-form">
+    <form id="audio-upload-form">
 
         <p class="bi bi-upload yk-bi-icon-big"></p>
 
         <p class="yk-text-normal"> 
-            アップロードする3Dモデルのpmd/pmxファイル※を選択してください。
+            アップロードするオーディオファイル(mp3)を選択してください。
         </p>
 
-        <p class="yk-text-description">
-            ※pmd/pmxファイルについては<a href="https://mmdagent-ex.dev/ja/docs/files/pmx/">こちら</a>をご参照ください。
-        </p>
-        
+        <!-- スキップできるように -->
+
         <label class="btn btn-primary">
             <input type="file" id="file-input" name="file-input">
             ファイルを選択
@@ -20,30 +18,29 @@
 
     </form>
 
-    <div id="model-error-msg"></div>
+    <div id="audio-error-msg"></div>
 
 </div>
 
 <script>
 
     // これらはグローバル変数なのでユニークである必要がある
-    const model_upload_form = document.getElementById('model-upload-form')
-    const model_error_msg = document.getElementById('model-error-msg')
+    const audio_upload_form = document.getElementById('audio-upload-form')
+    const audio_error_msg = document.getElementById('audio-error-msg')
 
     // 親要素(form)にイベントをつけると子要素のイベントが拾える
-    model_upload_form.addEventListener('change', (e) => {
+    audio_upload_form.addEventListener('change', (e) => {
         let type = e.target.type;
         console.log('onChange', type);
     });
 
-    model_upload_form.addEventListener('input', (e) => {
+    audio_upload_form.addEventListener('input', (e) => {
         let type = e.target.type;
         console.log('onInput', type);
 
         var xhr = new XMLHttpRequest()
-        var formData = new FormData(model_upload_form)
+        var formData = new FormData(audio_upload_form)
 
-        //var formAreaArea = document.getElementById('formAreaArea')
         formArea.hidden = true
         formAreaPreparingMessage.hidden = false
 
@@ -54,20 +51,20 @@
                 if (status === 0 || (status >= 200 && status < 400)) {
                     console.log("OK. Status: " + status)
                     // アップロード完了した時点でモーションアップロードフォームを用意
-                    $("#formArea").load("motionUploadForm.html", function(){
-                        console.log("prepare motion upload form complete")
+                    $("#formArea").load("detailForm.html", function(){
+                        console.log("prepare detail form complete")
                         formArea.hidden = false
                         formAreaPreparingMessage.hidden = true
                     })
                 }else{
                     console.log("Error. Status: " + status)
                     formAreaPreparingMessage.hidden = true
-                    error_msg.innerHTML = xhr.response
+                    audio_error_msg.innerHTML = xhr.response
                 }
             }
         }
         
-        var req_url = '/api/upload?file_type=model&room_id='+room_id
+        var req_url = '/api/upload?file_type=audio&room_id='+room_id
         console.log(req_url)
         xhr.open('POST', req_url)
         xhr.send(formData)

@@ -1,4 +1,4 @@
-<div class="yk-center" id="formAreaAreaArea">
+<div class="yk-center">
 
     <!-- todo: ドラッグ&ドロップできるように -->
     <form id="motion-upload-form">
@@ -54,15 +54,15 @@
                 if (status === 0 || (status >= 200 && status < 400)) {
                     console.log("OK. Status: " + status)
                     // アップロード完了した時点で詳細フォームを用意
-                    $("#formAreaAreaArea").load("detailForm.html", function(){
-                        console.log("prepare detail form complete")
+                    $("#formArea").load("audioUploadForm.html", function(){
+                        console.log("prepare audio upload form complete")
                         formArea.hidden = false
                         formAreaPreparingMessage.hidden = true
                     })
                 }else{
                     console.log("Error. Status: " + status)
                     formAreaPreparingMessage.hidden = true
-                    error_msg.innerHTML = xhr.response
+                    motion_error_msg.innerHTML = xhr.response
                 }
             }
         }
