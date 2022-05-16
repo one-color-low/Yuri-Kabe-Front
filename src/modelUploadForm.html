@@ -1,7 +1,7 @@
 <div class="yk-center" id="formAreaArea">
 
     <!-- todo: ドラッグ&ドロップできるように -->
-    <form id="upload-form">
+    <form id="model-upload-form">
 
         <p class="bi bi-upload yk-bi-icon-big"></p>
 
@@ -20,38 +20,48 @@
 
     </form>
 
-    <div id="error-msg"></div>
+    <div id="model-error-msg"></div>
 
 </div>
 
 <script>
 
-    const form = document.getElementById('upload-form')
-    const error_msg = document.getElementById('error-msg')
+    // これらはグローバル変数なのでユニークである必要がある
+    const model_upload_form = document.getElementById('model-upload-form')
+    const model_error_msg = document.getElementById('model-error-msg')
 
     // 親要素(form)にイベントをつけると子要素のイベントが拾える
-    form.addEventListener('change', (e) => {
+    model_upload_form.addEventListener('change', (e) => {
         let type = e.target.type;
         console.log('onChange', type);
     });
 
-    form.addEventListener('input', (e) => {
+    model_upload_form.addEventListener('input', (e) => {
         let type = e.target.type;
         console.log('onInput', type);
 
         var xhr = new XMLHttpRequest()
-        var formData = new FormData(form)
+        var formData = new FormData(model_upload_form)
+
+        //var formAreaArea = document.getElementById('formAreaArea')
+        formArea.hidden = true
+        formAreaPreparingMessage.hidden = false
+
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 var status = xhr.status;
                 if (status === 0 || (status >= 200 && status < 400)) {
                     console.log("OK. Status: " + status)
-                    $("#formAreaArea").load("detailForm.html", function(){
-                        console.log("prepare detail form complete")
+                    // アップロード完了した時点でモーションアップロードフォームを用意
+                    $("#formAreaArea").load("motionUploadForm.html", function(){
+                        console.log("prepare motion upload form complete")
+                        formArea.hidden = false
+                        formAreaPreparingMessage.hidden = true
                     })
                 }else{
                     console.log("Error. Status: " + status)
+                    formAreaPreparingMessage.hidden = true
                     error_msg.innerHTML = xhr.response
                 }
             }

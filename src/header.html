@@ -31,7 +31,7 @@
             </div>
             
             <div class="modal-body yk-center" id="formArea"></div>
-            <p class="yk-center" id="formAreaPreparingMessage">準備中です。少々お待ち下さい。</p>
+            <p class="yk-center" id="formAreaPreparingMessage">準備中です。しばらくお待ち下さい。</p>
             <p class="yk-center" id="formAreaUnloginMessage">
                 ルームをアップロードするには<i class="bi bi-person yk-bi-icon"></i>アイコンからログインしてください。
             </p>
@@ -67,6 +67,7 @@
 
     var room_id // jqueryの下の階層からも見える変数
 
+    // header.htmlを読み込んだ時点でモデルアップロードフォームを用意
     $(function () {
         $("#formArea").load("modelUploadForm.html", function(){
 
