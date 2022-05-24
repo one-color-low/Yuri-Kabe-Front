@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <p>pose detection test</p>
+        <!-- Require the peer dependencies of pose-detection. -->
+        <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+
+        <!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection"></script>
+    </head>
+    <body>
+        <image src="./img/body3.png" id="body-img"></image>
+
+        <a id="confirm">確認</a>
+
+    </body>
+
+    <script>
+        
+        url_obj = new URL(decodeURIComponent(document.location.href))
+        room_id = url_obj.searchParams.get("room_id")
+
+        var confirm = document.getElementById('confirm')
+        confirm.href = "http://localhost/viewer.html?room_id="+room_id
+        confirm.hidden = true
+
+        const image = document.getElementById("body-img");
+
+        async function detectPose() {
+
+            const model = poseDetection.SupportedModels.BlazePose;
+            const detectorConfig = {
+                runtime: 'mediapipe',
+                solutionPath: 'https://cdn.jsdelivr.net/npm/@mediapipe/pose'
+                                // or 'base/node_modules/@mediapipe/pose' in npm.
+            };
+            detector = await poseDetection.createDetector(model, detectorConfig);
+
+            const estimationConfig = {enableSmoothing: true};
+            const poses = await detector.estimatePoses(image, estimationConfig);
+
+            console.log(poses)
+
+            return poses
+
+        }
+
+        detectPose().then(value => {
+            var json_asocc = value;
+            var json_text = JSON.stringify(json_asocc);
+
+            fetch("/api/pos2vmd?room_id="+room_id, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: json_text
+            })
+            .then(
+                confirm.hidden = false
+            );
+        })
+
+    </script>
+</html>

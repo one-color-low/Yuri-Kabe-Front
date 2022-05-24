@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils_3d/control_utils_3d.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- カメラ映像そのものを流し込む場所 -->
+    <video class="input_video"></video>
+
+    <!-- ヒートマップ的な -->
+    <canvas class="output_canvas" width="1280px" height="720px"></canvas>
+
+    <!-- 回転するボーン的な -->
+    <div class="landmark-grid-container"></div>
+
+  </div>
+
+  <button id="record_btn"></button>
+
+  <a id="confirm">確認</a>
+
+</body>
+
+<script type="module">
+
+    var send_keypoints = [] //送信するkeypointsを入れる箱
+
+    var url_obj = new URL(decodeURIComponent(document.location.href))
+    var room_id = url_obj.searchParams.get("room_id")
+
+    var confirm = document.getElementById('confirm')
+    confirm.href = "http://localhost/viewer.html?room_id="+room_id
+    confirm.hidden = true
+
+    var record_btn = document.getElementById("record_btn")
+    record_btn.innerHTML = "録画開始"
+    var recording = false
+    record_btn.onclick = function(){
+        if(recording == false){
+            recording = true
+            record_btn.innerHTML = "録画停止"
+        }else if(recording == true){
+            recording = false
+            record_btn.innerHTML = "録画を終了しました。"
+            record_btn.setAttribute("disabled", true); //ボタンを押せないように
+            console.log(send_keypoints)
+            sendPose(send_keypoints)
+        }
+    }
+
+    const videoElement = document.getElementsByClassName('input_video')[0];
+    videoElement.hidden = true
+    const canvasElement = document.getElementsByClassName('output_canvas')[0];
+    const canvasCtx = canvasElement.getContext('2d');
+    const landmarkContainer = document.getElementsByClassName('landmark-grid-container')[0];
+    const grid = new LandmarkGrid(landmarkContainer);
+
+    console.log(room_id)
+
+    function sendPose(value){
+        var json_asocc = value;
+        var json_text = JSON.stringify(json_asocc);
+
+        fetch("/api/pos2vmd?room_id="+room_id, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: json_text
+        })
+        .then(
+            confirm.hidden = false
+        );
+    }
+    
+    function onResults(results) { //pose.onResultsから実行されたとき、このresultsにポーズ推定の結果が入っている
+
+        // record_btnが押されたらsend_keypointsへの追加
+
+      if (!results.poseLandmarks) {
+        grid.updateLandmarks([]);
+        return;
+      }
+      //console.log(results['poseLandmarks']) // この中にkeypoints_3dが入っていることを確認
+      if (recording == true){
+          send_keypoints.push(results['poseLandmarks'])
+      }
+    
+      canvasCtx.save();
+      canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+      canvasCtx.drawImage(results.segmentationMask, 0, 0,
+                          canvasElement.width, canvasElement.height);
+    
+      // Only overwrite existing pixels.
+      canvasCtx.globalCompositeOperation = 'source-in';
+      canvasCtx.fillStyle = '#00FF00';
+      canvasCtx.fillRect(0, 0, canvasElement.width, canvasElement.height);
+    
+      // Only overwrite missing pixels.
+      canvasCtx.globalCompositeOperation = 'destination-atop';
+      canvasCtx.drawImage(
+          results.image, 0, 0, canvasElement.width, canvasElement.height);
+    
+      canvasCtx.globalCompositeOperation = 'source-over';
+      drawConnectors(canvasCtx, results.poseLandmarks, POSE_CONNECTIONS,
+                     {color: '#00FF00', lineWidth: 4});
+      drawLandmarks(canvasCtx, results.poseLandmarks,
+                    {color: '#FF0000', lineWidth: 2});
+      canvasCtx.restore();
+    
+      grid.updateLandmarks(results.poseWorldLandmarks);
+    }
+    
+    const pose = new Pose({locateFile: (file) => {
+      return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`;
+    }});
+    pose.setOptions({
+      modelComplexity: 1,
+      smoothLandmarks: true,
+      enableSegmentation: true,
+      smoothSegmentation: true,
+      minDetectionConfidence: 0.5,
+      minTrackingConfidence: 0.5
+    });
+    pose.onResults(onResults);
+    
+    const camera = new Camera(videoElement, { // ↓多分このonFrameに設定している関数がフレーム毎に実行されている。
+      onFrame: async () => {
+        await pose.send({image: videoElement}); // videoElementから画像を抽出してpose推定機に送信。Q. resultはどうやって返ってくる？
+      },
+      width: 1280,
+      height: 720
+    });
+    camera.start();
+    
+</script>
+
+</html>
