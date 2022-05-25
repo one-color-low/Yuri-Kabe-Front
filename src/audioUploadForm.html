@@ -1,6 +1,5 @@
 <div class="yk-center">
 
-    <!-- todo: ドラッグ&ドロップできるように -->
     <form id="audio-upload-form">
 
         <p class="bi bi-upload yk-bi-icon-big"></p>
@@ -9,8 +8,6 @@
             アップロードするオーディオファイル(mp3)を選択してください。
         </p>
 
-        <!-- スキップできるように -->
-
         <label class="btn btn-primary">
             <input type="file" id="file-input" name="file-input">
             ファイルを選択
@@ -18,25 +15,29 @@
 
     </form>
 
-    <div id="audio-error-msg"></div>
+    <button class="btn btn-outline-secondary" id="audio-skip-btn">スキップ<span class="yk-text-description">※</span></button>
+    <p class="yk-center yk-text-description">※デフォルトのオーディオが使用されます。</p>
 
 </div>
 
 <script>
 
     // これらはグローバル変数なのでユニークである必要がある
-    const audio_upload_form = document.getElementById('audio-upload-form')
-    const audio_error_msg = document.getElementById('audio-error-msg')
+    var audio_upload_form = document.getElementById('audio-upload-form')
+    var audio_skip_btn = document.getElementById('audio-skip-btn')
 
-    // 親要素(form)にイベントをつけると子要素のイベントが拾える
-    audio_upload_form.addEventListener('change', (e) => {
-        let type = e.target.type;
-        console.log('onChange', type);
-    });
 
-    audio_upload_form.addEventListener('input', (e) => {
-        let type = e.target.type;
-        console.log('onInput', type);
+    audio_skip_btn.onclick = function() {
+
+        $("#formArea").load("detailForm.html", function(){
+            formArea.hidden = false
+            formAreaPreparingMessage.hidden = true
+            error_msg.innerHTML = ""
+        })
+
+    }
+
+    audio_upload_form.addEventListener('input', () => {
 
         var xhr = new XMLHttpRequest()
         var formData = new FormData(audio_upload_form)
@@ -44,28 +45,35 @@
         formArea.hidden = true
         formAreaPreparingMessage.hidden = false
 
-
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 var status = xhr.status;
                 if (status === 0 || (status >= 200 && status < 400)) {
                     console.log("OK. Status: " + status)
-                    // アップロード完了した時点でモーションアップロードフォームを用意
+
                     $("#formArea").load("detailForm.html", function(){
-                        console.log("prepare detail form complete")
+
                         formArea.hidden = false
                         formAreaPreparingMessage.hidden = true
+
+                        error_msg.innerHTML = ""
+
                     })
+
                 }else{
+
                     console.log("Error. Status: " + status)
+
+                    formArea.hidden = false
                     formAreaPreparingMessage.hidden = true
-                    audio_error_msg.innerHTML = xhr.response
+
+                    error_msg.innerHTML = xhr.response
+
                 }
             }
         }
         
         var req_url = '/api/upload?file_type=audio&room_id='+room_id
-        console.log(req_url)
         xhr.open('POST', req_url)
         xhr.send(formData)
 

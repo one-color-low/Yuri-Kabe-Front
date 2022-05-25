@@ -30,11 +30,16 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             
+            <!-- formArea -->
             <div class="modal-body yk-center" id="formArea"></div>
+
             <p class="yk-center" id="formAreaPreparingMessage">準備中です。しばらくお待ち下さい。</p>
             <p class="yk-center" id="formAreaUnloginMessage">
                 ルームをアップロードするには<i class="bi bi-person yk-bi-icon"></i>アイコンからログインしてください。
             </p>
+
+            <!-- 常に表示しておき、中身変える -->
+            <div id="error-msg" class="yk-center yk-error-msg"></div>
             
         </div>
     </div>
@@ -65,24 +70,24 @@
 
 <script>
 
-    var room_id // jqueryの下の階層からも見える変数
+    // jqueryの下の階層からも見える変数
+    var room_id 
+    var formArea = document.getElementById('formArea')
+    var formAreaPreparingMessage = document.getElementById('formAreaPreparingMessage')
+    var formAreaUnloginMessage = document.getElementById('formAreaUnloginMessage')
+    var error_msg =  document.getElementById("error-msg")
+    var upload_btn = document.getElementById('upload-btn')
 
-    // header.htmlを読み込んだ時点でモデルアップロードフォームを用意
+    // Upload Modal 関係
     $(function () {
         $("#formArea").load("stage3dUploadForm.html", function(){
-
-            var upload_btn = document.getElementById('upload-btn')
-            var formArea = document.getElementById('formArea')
-            var formAreaPreparingMessage = document.getElementById('formAreaPreparingMessage')
-            var formAreaUnloginMessage = document.getElementById('formAreaUnloginMessage')
 
             formArea.hidden = true
             formAreaPreparingMessage.hidden = false
             formAreaUnloginMessage.hidden = true
 
+            // header.htmlのアップロードボタンがクリックされたときの動作
             upload_btn.onclick =  function() {
-
-                console.log("upload_btn clicked")
 
                 var mockObj = {
                     "room_id" : "xxx",
@@ -94,19 +99,30 @@
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
                         var status = xhr.status;
+
                         if (status === 0 || (status >= 200 && status < 400)) {
+
                             console.log("OK. Status: " + status)
                             var res = JSON.parse(xhr.response)
-                            console.log(res)
                             room_id = res.id
-                            console.log("room id is: " + room_id)
+
                             formArea.hidden = false // ルーム作成完了したタイミングでアップロードフォーム表示
                             formAreaPreparingMessage.hidden = true
+
+                            error_msg.innerHTML = ""
+
                         }else{
+
+                            // ログインしていない場合エラーになる
                             console.log("Error. Status: " + status)
-                            console.log(xhr.response)
+
+                            formArea.hidden = true
                             formAreaPreparingMessage.hidden = true
-                            formAreaUnloginMessage.hidden = false
+                            formAreaUnloginMessage.hidden = false // 「ログインしてください」と表示
+
+                            // エラーメッセージを画面に表示
+                            error_msg.innerHTML = xhr.response
+
                         }
                     }
                 }

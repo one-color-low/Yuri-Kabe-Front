@@ -1,0 +1,50 @@
+<div class="yk-center container-fluid row">
+
+        <p class="yk-center yk-text-title">モーション・音声アップロード</p>
+
+
+        <div class="col-md-6">
+            <button type="button" class="btn" id="select-video-btn">
+                <i class="bi bi-camera-video yk-bi-icon-big"></i>
+            </button>
+            <p class="yk-center">動画を撮影してモーション・音声を作成します。</p>
+        </div>
+
+        <div class="col-md-6">
+            <button type="button" class="btn" id="select-vmd-btn">
+                <i class="bi bi-upload yk-bi-icon-big"></i>
+            </button>
+            <p>VMDファイル・MP3ファイルをアップロードします。</p>
+        </div>
+
+    <div id="model-error-msg"></div>
+
+</div>
+
+<script>
+
+    // これらはグローバル変数なのでユニークである必要がある
+    var select_video_btn = document.getElementById('select-video-btn')
+    var select_vmd_btn = document.getElementById('select-vmd-btn')
+
+    select_video_btn.onclick = function() {
+
+        $("#formArea").load("cameraPoseDetection.html", function(){
+            formArea.hidden = false
+            formAreaPreparingMessage.hidden = true
+            error_msg.innerHTML = ""
+        })
+
+    }
+
+    select_vmd_btn.onclick = function() {
+
+        $("#formArea").load("motionUploadForm.html", function(){
+            formArea.hidden = false
+            formAreaPreparingMessage.hidden = true
+            error_msg.innerHTML = ""
+        })
+
+}
+
+</script>

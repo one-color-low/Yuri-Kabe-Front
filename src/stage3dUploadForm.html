@@ -21,55 +21,63 @@
 
     </form>
 
-    <div id="stage3d-error-msg"></div>
+    <button class="btn btn-outline-secondary" id="stage3d-skip-btn">スキップ<span class="yk-text-description">※</span></button>
+    <p class="yk-center yk-text-description">※デフォルトのステージが使用されます。</p>
 
 </div>
 
 <script>
 
     // これらはグローバル変数なのでユニークである必要がある
-    const stage3d_upload_form = document.getElementById('stage3d-upload-form')
-    const stage3d_error_msg = document.getElementById('stage3d-error-msg')
+    var stage3d_upload_form = document.getElementById('stage3d-upload-form')
+    var stage3d_skip_btn = document.getElementById('stage3d-skip-btn')
 
-    // 親要素(form)にイベントをつけると子要素のイベントが拾える
-    stage3d_upload_form.addEventListener('change', (e) => {
-        let type = e.target.type;
-        console.log('onChange', type);
-    });
+    stage3d_skip_btn.onclick = function() {
 
-    stage3d_upload_form.addEventListener('input', (e) => {
-        let type = e.target.type;
-        console.log('onInput', type);
+        $("#formArea").load("modelUploadForm.html", function(){
+            formArea.hidden = false
+            formAreaPreparingMessage.hidden = true
+            error_msg.innerHTML = ""
+        })
+
+    }
+
+    stage3d_upload_form.addEventListener('input', () => {
 
         var xhr = new XMLHttpRequest()
         var formData = new FormData(stage3d_upload_form)
 
-        //var formAreaArea = document.getElementById('formAreaArea')
         formArea.hidden = true
         formAreaPreparingMessage.hidden = false
-
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 var status = xhr.status;
                 if (status === 0 || (status >= 200 && status < 400)) {
                     console.log("OK. Status: " + status)
-                    // アップロード完了した時点でモーションアップロードフォームを用意
+
                     $("#formArea").load("modelUploadForm.html", function(){
-                        console.log("prepare motion upload form complete")
+
                         formArea.hidden = false
                         formAreaPreparingMessage.hidden = true
+
+                        error_msg.innerHTML = ""
                     })
+
                 }else{
+
                     console.log("Error. Status: " + status)
+
+                    formArea.hidden = false
                     formAreaPreparingMessage.hidden = true
-                    stage3d_error_msg.innerHTML = xhr.response
+
+                    error_msg.innerHTML = xhr.response
+                    
                 }
             }
         }
         
         var req_url = '/api/upload?file_type=stage_3d&room_id='+room_id
-        console.log(req_url)
         xhr.open('POST', req_url)
         xhr.send(formData)
 

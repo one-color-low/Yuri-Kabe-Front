@@ -125,3 +125,6 @@ a{
     right: 10;
     bottom: 10;
 }
+.yk-error-msg{
+    color: red;
+}
