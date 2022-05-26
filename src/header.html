@@ -120,8 +120,8 @@
                             formAreaPreparingMessage.hidden = true
                             formAreaUnloginMessage.hidden = false // 「ログインしてください」と表示
 
-                            // エラーメッセージを画面に表示
-                            error_msg.innerHTML = xhr.response
+                            // エラーメッセージはUnloginMessageで代用するので表示しない
+                            error_msg.innerHTML = ""
 
                         }
                     }

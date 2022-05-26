@@ -68,7 +68,7 @@
                 var status = xhr.status;
                 if (status === 0 || (status >= 200 && status < 400)) {
                     console.log("OK. Status: " + status)
-                    $("#formArea").load("success.html", function(){
+                    $("#formArea").load("success_create.html", function(){
                         console.log("room create success")
                     })
                 }else{

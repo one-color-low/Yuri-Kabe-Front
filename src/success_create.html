@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p>Success!!</p>
+        <button class="btn btn-primary" id="result-btn">結果を確認</button>
+    </body>
+    <script>
+        var result_btn = document.getElementById("result-btn")
+        result_btn.onclick = function(){
+            location.href = "viewer.html?room_id="+room_id
+        }
+    </script>
+</html>
