@@ -11,7 +11,7 @@
         <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection"></script>
     </head>
     <body>
-        <image src="./img/body3.png" id="body-img"></image>
+        <image src="../../img/body2.jpg" id="body-img"></image>
 
         <a id="confirm">確認</a>
 
@@ -48,7 +48,9 @@
         }
 
         detectPose().then(value => {
-            var json_asocc = value;
+            //todo: valueをkeypoints3D抽出した形に整形
+            var json_asocc = []
+            json_asocc[0] = value[0]['keypoints3D']
             var json_text = JSON.stringify(json_asocc);
 
             fetch("/api/pos2vmd?room_id="+room_id, {

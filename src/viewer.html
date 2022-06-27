@@ -27,7 +27,7 @@
 
             <div class="col-md-9 yk-center" id="room-viewer">
 
-                <iframe id="room-iframe" src="room.html" class="yk-iframe" allow="fullscreen; xr-spatial-tracking; autoplay;"></iframe>
+                <iframe id="room-iframe" class="yk-iframe" allow="fullscreen; xr-spatial-tracking; autoplay;"></iframe>
 
                 <div id="room-info"></div>
 
@@ -39,9 +39,8 @@
 
         <script>
             var room_iframe = document.getElementById("room-iframe")
-            url_obj = new URL(decodeURIComponent(document.location.href))
+            var url_obj = new URL(decodeURIComponent(document.location.href))
             room_id = url_obj.searchParams.get("room_id")
-            console.log('/api/static/room/'+room_id)
             room_iframe.contentDocument.location.replace('/api/static/room/'+room_id)
             fetch('/api/countViews/'+room_id, {method: "GET",})
         </script>
@@ -50,7 +49,7 @@
 
         <script>
             $(function () {
-                $("#header").load("header.html", function(){
+                $("#header").load("html/header.html", function(){
 
                     search_btn = document.getElementById('search-button');
 

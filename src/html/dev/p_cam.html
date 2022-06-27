@@ -13,10 +13,10 @@
   <div class="container">
 
     <!-- カメラ映像そのものを流し込む場所 -->
-    <video class="input_video"></video>
+    <video class="input_video" width="640" height="480"></video>
 
     <!-- ヒートマップ的な -->
-    <canvas class="output_canvas" width="1280px" height="720px"></canvas>
+    <canvas class="output_canvas" width="640" height="480"></canvas>
 
     <!-- 回転するボーン的な -->
     <div class="landmark-grid-container"></div>
@@ -132,12 +132,14 @@
     });
     pose.onResults(onResults);
     
+    // このCameraはmediapipe側で用意されているutil。第2引数の形式が謎だが、onFrameはフレームを読み込んだときに動く関数と思われる。この中でFPS設定するかも？その場合kalidoでもやってそう。
     const camera = new Camera(videoElement, { // ↓多分このonFrameに設定している関数がフレーム毎に実行されている。
       onFrame: async () => {
+        // pose.send()はpromiseを返す。
         await pose.send({image: videoElement}); // videoElementから画像を抽出してpose推定機に送信。Q. resultはどうやって返ってくる？
       },
-      width: 1280,
-      height: 720
+      width: 640,
+      height: 480
     });
     camera.start();
     

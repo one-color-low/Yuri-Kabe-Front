@@ -1,11 +1,12 @@
 <div class="yk-center">
 
-    <form id="model-upload-form">
+    <!-- todo: ドラッグ&ドロップできるように -->
+    <form id="stage3d-upload-form">
 
         <p class="bi bi-upload yk-bi-icon-big"></p>
 
         <p class="yk-text-normal"> 
-            アップロードする3Dモデル(pmd/pmx)が含まれるzipファイルをアップロードしてください。
+            アップロードするステージ(pmd/pmx)が含まれるzipファイルをアップロードしてください。
         </p>
 
         <p class="yk-text-description">
@@ -20,33 +21,31 @@
 
     </form>
 
-    <button class="btn btn-outline-secondary" id="model-skip-btn">スキップ<span class="yk-text-description">※</span></button>
-    <p class="yk-center yk-text-description">※デフォルトのモデルが使用されます。</p>
+    <button class="btn btn-outline-secondary" id="stage3d-skip-btn">スキップ<span class="yk-text-description">※</span></button>
+    <p class="yk-center yk-text-description">※デフォルトのステージが使用されます。</p>
 
 </div>
 
 <script>
 
     // これらはグローバル変数なのでユニークである必要がある
-    var model_upload_form = document.getElementById('model-upload-form')
-    var model_skip_btn = document.getElementById('model-skip-btn')
+    var stage3d_upload_form = document.getElementById('stage3d-upload-form')
+    var stage3d_skip_btn = document.getElementById('stage3d-skip-btn')
 
-    model_skip_btn.onclick = function() {
+    stage3d_skip_btn.onclick = function() {
 
-        $("#formArea").load("selectMotionUploadMethod.html", function(){
-
+        $("#formArea").load("html/form/room/2_upload_model.html", function(){
             formArea.hidden = false
             formAreaPreparingMessage.hidden = true
             error_msg.innerHTML = ""
-
         })
 
     }
 
-    model_upload_form.addEventListener('input', () => {
+    stage3d_upload_form.addEventListener('input', () => {
 
         var xhr = new XMLHttpRequest()
-        var formData = new FormData(model_upload_form)
+        var formData = new FormData(stage3d_upload_form)
 
         formArea.hidden = true
         formAreaPreparingMessage.hidden = false
@@ -55,16 +54,14 @@
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 var status = xhr.status;
                 if (status === 0 || (status >= 200 && status < 400)) {
-
                     console.log("OK. Status: " + status)
 
-                    $("#formArea").load("selectMotinoUploadMethod.html", function(){
+                    $("#formArea").load("html/form/room/2_upload_model.html", function(){
 
                         formArea.hidden = false
                         formAreaPreparingMessage.hidden = true
 
                         error_msg.innerHTML = ""
-
                     })
 
                 }else{
@@ -75,12 +72,12 @@
                     formAreaPreparingMessage.hidden = true
 
                     error_msg.innerHTML = xhr.response
-
+                    
                 }
             }
         }
         
-        var req_url = '/api/upload?file_type=model&room_id='+room_id
+        var req_url = '/api/upload?file_type=stage_3d&room_id='+room_id
         xhr.open('POST', req_url)
         xhr.send(formData)
 
